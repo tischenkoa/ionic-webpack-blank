@@ -3,7 +3,9 @@
   "version": "1.1.1",
   "description": "routeTripIonic: An Ionic project",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --colors --content-base www/"
+    "server": "NODE_ENV=development webpack-dev-server --hot --inline --colors --progress",
+    "dev": "NODE_ENV=development webpack --progress",
+    "prod": "NODE_ENV=production webpack --progress"
   },
   "dependencies": {
     "angular": "^1.5.8",
