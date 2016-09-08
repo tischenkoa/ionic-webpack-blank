@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 var NODE_ENV = process.env.NODE_ENV;
 
@@ -13,7 +14,7 @@ module.exports = {
 	devtool: 'source-map',
 	output: {
 		path: path.resolve('www'),
-		filename: path.join('assets', '[name].bundle.[chunkhash:6].js')
+		filename: path.join('assets', '[name].bundle.[hash:6].js')
 	},
 	module: {
 		loaders: [
@@ -77,6 +78,11 @@ module.exports = {
 
 		new webpack.optimize.CommonsChunkPlugin({
 			name: ['app', 'vendor']
+		}),
+
+		new ngAnnotatePlugin({
+			add: true
+			// other ng-annotate options here
 		})
 
 		//минификация JS
@@ -99,8 +105,10 @@ if (NODE_ENV === 'production') {
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				warnings: false,
-				drop_console: true
-			}
+				drop_console: true,
+				keep_fnames: true
+			},
+			mangle: false
 		})
 	)
 }
